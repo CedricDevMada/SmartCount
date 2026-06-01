@@ -349,13 +349,19 @@
 
         <p>Veuillez saisir le mot de passe</p>
 
-        <div class="input-group">
-          <input
-            type="password"
-            id="adminPassword"
-            placeholder="Mot de passe"
-          />
-        </div>
+       <div class="input-group password-group">
+  <input
+    type="password"
+    id="adminPassword"
+    placeholder="Mot de passe"
+  />
+
+  <i
+    class="bi bi-eye"
+    id="toggleAdminPassword"
+    onclick="togglePassword('adminPassword', this)"
+  ></i>
+</div>
 
         <button class="btn" onclick="confirmPassword()">
           <i class="bi bi-check-circle"></i>
