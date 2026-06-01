@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>SmartCount</title>
+
+    <link
+      rel="stylesheet"
+      href="bootstrap-icons-1.13.1/bootstrap-icons.css"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <i class="bi bi-cpu-fill"></i>
+        <span>SmartCount</span>
+      </div>
+
+      <nav class="menu">
+        <a class="active" onclick="showPage('dashboard', this)">
+          <i class="bi bi-speedometer2"></i>
+          Tableau de board
+        </a>
+
+        <a onclick="showPage('reseaux', this)">
+          <i class="bi bi-wifi"></i>
+          Réseaux
+        </a>
+
+        <a onclick="showPage('module', this)">
+          <i class="bi bi-hdd-network"></i>
+          Module
+        </a>
+
+        <a onclick="openPasswordModal(this)">
+          <i class="bi bi-gear-fill"></i>
+          Paramètre
+        </a>
+      </nav>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <main class="main">
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="burger" onclick="toggleSidebar()">
+          <i class="bi bi-list"></i>
+        </div>
+
+        <h1 id="pageTitle">Tableau de board</h1>
+      </div>
+
+      <!-- ================= DASHBOARD ================= -->
+      <section class="page active" id="dashboard">
+        <div class="cards">
+          <!-- PASSAGE -->
+          <div class="card">
+            <div class="card-top">
+              <div>
+                <p>Passage Total</p>
+
+                <h2 id="passageCount">50</h2>
+
+                <div class="counter-actions">
+                  <button
+                    class="counter-btn decrement"
+                    onclick="decrementPassage()"
+                  >
+                    <i class="bi bi-dash-lg"></i>
+                  </button>
+
+                  <button
+                    class="counter-btn increment"
+                    onclick="incrementPassage()"
+                  >
+                    <i class="bi bi-plus-lg"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="card-icon blue">
+                <i class="bi bi-people-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODE -->
+          <div class="card">
+            <div class="card-top">
+              <div>
+                <p>Mode</p>
+                <h2>Hors ligne</h2>
+              </div>
+
+              <div class="card-icon green">
+                <i class="bi bi-wifi"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- BATTERIE -->
+          <div class="card">
+            <div class="card-top">
+              <div>
+                <p>Batterie</p>
+                <h2>100%</h2>
+              </div>
+
+              <div class="card-icon orange">
+                <i class="bi bi-battery-full"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= RESEAUX ================= -->
+      <section class="page" id="reseaux">
+        <div class="form-box">
+          <h3>
+            <i class="bi bi-wifi"></i>
+            Configuration Réseaux
+          </h3>
+
+          <form onsubmit="submit_reseau(event)">
+            <!-- MODE -->
+            <div class="input-group">
+              <label>
+                <i class="bi bi-diagram-3"></i>
+                Choisir le mode
+              </label>
+
+              <select id="modeNet" onchange="changeNetworkMode()">
+                <option value="ap">Point d'accès</option>
+                <option value="online">En ligne</option>
+              </select>
+            </div>
+
+            <!-- DYNAMIC AREA -->
+            <div id="networkArea"></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= MODULE ================= -->
+      <section class="page" id="module">
+        <div class="form-box">
+          <h3>
+            <i class="bi bi-hdd-network"></i>
+            Configuration Module
+          </h3>
+
+          <form id="moduleForm">
+            <div class="input-group">
+              <label>
+                <i class="bi bi-diagram-3"></i>
+                Type Module
+              </label>
+
+              <select id="typeModule">
+                <option>Master</option>
+                <option>Slave</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label>
+                <i class="bi bi-cpu"></i>
+                Adresse MAC
+              </label>
+
+              <input
+                type="text"
+                id="mac1"
+                placeholder="AA:BB:CC:DD:EE:FF"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label>
+                <i class="bi bi-cpu-fill"></i>
+                MAC autre module
+              </label>
+
+              <input
+                type="text"
+                id="mac2"
+                placeholder="11:22:33:44:55:66"
+                required
+              />
+            </div>
+
+            <button class="btn">
+              <i class="bi bi-check-circle"></i>
+              Confirmer
+            </button>
+          </form>
+        </div>
+
+        <!-- LIST -->
+        <div class="module-list" id="moduleList"></div>
+      </section>
+
+      <!-- ================= PARAMETRE ================= -->
+      <section class="page" id="parametre">
+        <div class="settings-layout">
+          <!-- MENU PARAMETRE -->
+          <div class="settings-sidebar">
+            <button
+              class="settings-btn active"
+              onclick="showSettingPage('updatePage', this)"
+            >
+              <i class="bi bi-arrow-repeat"></i>
+              Mise à jour
+            </button>
+
+            <button
+              class="settings-btn"
+              onclick="showSettingPage('caracteristiquePage', this)"
+            >
+              <i class="bi bi-info-circle"></i>
+              Caractéristiques Module
+            </button>
+          </div>
+
+          <!-- CONTENU -->
+          <div class="settings-content">
+            <!-- ================= PAGE UPDATE ================= -->
+            <div class="setting-page active" id="updatePage">
+              <div class="form-box">
+                <h3>
+                  <i class="bi bi-arrow-repeat"></i>
+                  Mise à jour Firmware
+                </h3>
+
+                <form id="firmwareForm">
+                  <!-- MODE -->
+                  <div class="input-group">
+                    <label>
+                      <i class="bi bi-diagram-3"></i>
+                      Mode Mise à jour
+                    </label>
+
+                    <select id="firmwareMode" onchange="changeFirmwareMode()">
+                      <option value="offline">Hors ligne</option>
+                      <option value="online">En ligne</option>
+                    </select>
+                  </div>
+
+                  <!-- DYNAMIC AREA -->
+                  <div id="firmwareArea"></div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ================= PAGE CARACTERISTIQUE ================= -->
+            <div class="setting-page" id="caracteristiquePage">
+              <div class="form-box">
+                <h3>
+                  <i class="bi bi-info-circle"></i>
+                  Caractéristiques Module
+                </h3>
+
+                <div class="characteristic-grid">
+                  <div class="characteristic-card">
+                    <span class="char-label">
+                      <i class="bi bi-tag-fill"></i>
+                      Nom
+                    </span>
+
+                    <span class="char-value"> SmartCount </span>
+                  </div>
+
+                  <div class="characteristic-card">
+                    <span class="char-label">
+                      <i class="bi bi-diagram-3-fill"></i>
+                      Rôle
+                    </span>
+
+                    <span class="char-value"> Master </span>
+                  </div>
+
+                  <div class="characteristic-card">
+                    <span class="char-label">
+                      <i class="bi bi-wifi-off"></i>
+                      Mode
+                    </span>
+
+                    <span class="char-value"> Hors ligne </span>
+                  </div>
+
+                  <div class="characteristic-card">
+                    <span class="char-label">
+                      <i class="bi bi-broadcast"></i>
+                      Détection Distance
+                    </span>
+
+                    <span class="char-value"> 5m </span>
+                  </div>
+
+                  <div class="characteristic-card">
+                    <span class="char-label">
+                      <i class="bi bi-radar"></i>
+                      Type de capteur
+                    </span>
+
+                    <span class="char-value"> Ultrason </span>
+                  </div>
+
+                  <div class="characteristic-card">
+                    <span class="char-label">
+                      <i class="bi bi-battery-full"></i>
+                      Autonomie Batterie
+                    </span>
+
+                    <span class="char-value"> 10h </span>
+                  </div>
+
+                  <div class="characteristic-card">
+                    <span class="char-label">
+                      <i class="bi bi-cpu-fill"></i>
+                      Adresse MAC
+                    </span>
+
+                    <span class="char-value"> AA:BB:CC:DD:EE:FF </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= MODAL PASSWORD ================= -->
+    <div class="modal-overlay" id="passwordModal">
+      <div class="modal-box">
+        <h2>
+          <i class="bi bi-shield-lock-fill"></i>
+          Accès Paramètre
+        </h2>
+
+        <p>Veuillez saisir le mot de passe</p>
+
+        <div class="input-group">
+          <input
+            type="password"
+            id="adminPassword"
+            placeholder="Mot de passe"
+          />
+        </div>
+
+        <button class="btn" onclick="confirmPassword()">
+          <i class="bi bi-check-circle"></i>
+          Confirmer
+        </button>
+
+        <p class="error-text" id="passwordError"></p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
