@@ -66,6 +66,11 @@ let currentParamElement = null;
 function openPasswordModal(element) {
   currentParamElement = element;
 
+   // Fermer la sidebar sur mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById("sidebar").classList.remove("active");
+  }
+
   document.getElementById("passwordModal").classList.add("active");
 
   document.getElementById("adminPassword").value = "";
