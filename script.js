@@ -276,6 +276,34 @@ document.getElementById("moduleForm").addEventListener("submit", function (e) {
     });
     return;
   }
+  const data = {
+    type: type,
+    macMaster: mac1,
+    macSlave: mac2,
+  };
+
+  fetch("http://localhost:3000/module", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      Swal.fire({
+        icon: "success",
+        title: "Module ajouté",
+        text: result.message || "Succès",
+      });
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: error.message,
+      });
+    });
 
   let type = document.getElementById("typeModule").value;
 
@@ -360,7 +388,7 @@ function submit_reseau(event) {
       title: "SSID invalide",
       text: "Le nom doit contenir entre 4 et 20 caractères",
     });
-    alert("SSID invalide");
+
     return;
   }
 
@@ -370,25 +398,38 @@ function submit_reseau(event) {
       title: "Mot de passe invalide",
       text: "Le mot de passe doit contenir entre 8 et 20 caractères",
     });
-    alert("Mot de passe invalide");
+
     return;
   }
 
-  if (mode === "ap") {
-    Swal.fire({
-      icon: "success",
-      title: "Configuration enregistrée",
-      text: "Le point d'accès a été configuré avec succès",
-    });
-  }
+  const data = {
+    mode: mode,
+    ssid: ssid,
+    password: password,
+  };
 
-  if (mode === "online") {
-    Swal.fire({
-      icon: "success",
-      title: "Configuration enregistrée",
-      text: "Le réseau WiFi a été configuré avec succès",
+  fetch("http://localhost:3000/reseau", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      Swal.fire({
+        icon: "success",
+        title: "Configuration enregistrée",
+        text: result.message || "Succès",
+      });
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: error.message,
+      });
     });
-  }
 
   inputs.forEach((input) => {
     input.value = "";
@@ -529,6 +570,34 @@ function uploadOfflineFirmware() {
     });
     return;
   }
+  const data = {
+    module: module,
+    firmwareUrl: url,
+  };
+
+  let formData = new FormData();
+
+  formData.append("firmware", file);
+
+  fetch("http://localhost:3000/update-offline", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      Swal.fire({
+        icon: "success",
+        title: "Firmware envoyé",
+        text: result.message,
+      });
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: error.message,
+      });
+    });
 
   console.log("Firmware sélectionné :", file.name);
 
@@ -564,10 +633,37 @@ function uploadOnlineFirmware() {
     });
     return;
   }
+  const data = {
+    module: module,
+    firmwareUrl: url,
+  };
 
-  console.log("Module :", module);
+  fetch("http://localhost:3000/update-online", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      Swal.fire({
+        icon: "success",
+        title: "Mise à jour lancée",
+        text: result.message,
+      });
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: error.message,
+      });
+    });
 
-  console.log("Firmware URL :", url);
+  /*console.log("Module :", module);
+
+  console.log("Firmware URL :", url);*/
 
   Swal.fire({
     icon: "success",
