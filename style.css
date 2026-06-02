@@ -367,10 +367,10 @@ body {
   }
 
   .main {
-  margin-left: 0;
-  width: 100%;
-  padding: 12px;
-}
+    margin-left: 0;
+    width: 100%;
+    padding: 12px;
+  }
 
   .burger {
     display: flex;
@@ -383,34 +383,34 @@ body {
   }
 
   .cards {
-  grid-template-columns: 1fr;
-  gap: 15px;
-}
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 
   .card {
-  padding: 18px;
-}
+    padding: 18px;
+  }
 
-.card h2 {
-  font-size: 28px;
-}
+  .card h2 {
+    font-size: 28px;
+  }
 
-.form-box {
-  padding: 18px;
-}
+  .form-box {
+    padding: 18px;
+  }
 
-.topbar {
-  margin-bottom: 20px;
-}
+  .topbar {
+    margin-bottom: 20px;
+  }
 
-.btn {
-  height: 50px;
-}
+  .btn {
+    height: 50px;
+  }
 
-.input-group input,
-.input-group select {
-  height: 50px;
-}
+  .input-group input,
+  .input-group select {
+    height: 50px;
+  }
 }
 
 /* ================= FILE INPUT ================= */
@@ -540,8 +540,6 @@ input[type="file"]:hover {
   color: #0f172a;
 }
 
-/* ================= RESPONSIVE PARAMETRE ================= */
-
 /* ================= MOBILE FIX PARAMETRE ================= */
 
 @media (max-width: 768px) {
@@ -569,6 +567,93 @@ input[type="file"]:hover {
 
   .characteristic-card {
     width: 100%;
+  }
+  body {
+    background: #ffffff;
+  }
+
+  .sidebar {
+    left: -100%;
+    width: 240px;
+    border-right: 1px solid #e5e7eb;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.08);
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+  }
+
+  .topbar {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .topbar h1 {
+    font-size: 20px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .card,
+  .form-box,
+  .module-card,
+  .settings-sidebar,
+  .characteristic-card {
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+  }
+
+  .card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .form-box,
+  .module-card,
+  .characteristic-card {
+    border-radius: 14px;
+  }
+
+  .card h2 {
+    font-size: 28px;
+  }
+
+  .btn,
+  .input-group input,
+  .input-group select {
+    height: 50px;
+  }
+
+  .settings-layout {
+    flex-direction: column;
+  }
+
+  .settings-content,
+  .setting-page,
+  .form-box {
+    width: 100%;
+  }
+
+  .characteristic-grid {
+    grid-template-columns: 1fr;
   }
 }
 
