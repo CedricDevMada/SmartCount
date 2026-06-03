@@ -656,6 +656,10 @@ input[type="file"]:hover {
   position: relative;
 }
 
+.password-group input {
+  padding-right: 45px;
+}
+
 .password-group i {
   position: absolute;
   right: 15px;
@@ -664,4 +668,5 @@ input[type="file"]:hover {
   cursor: pointer;
   color: #64748b;
   font-size: 18px;
+  z-index: 10;
 }

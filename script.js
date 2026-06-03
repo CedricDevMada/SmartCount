@@ -66,7 +66,7 @@ let currentParamElement = null;
 function openPasswordModal(element) {
   currentParamElement = element;
 
-   // Fermer la sidebar sur mobile
+  // Fermer la sidebar sur mobile
   if (window.innerWidth <= 768) {
     document.getElementById("sidebar").classList.remove("active");
   }
@@ -166,20 +166,28 @@ function changeNetworkMode() {
 
         <div class="input-group">
 
-          <label>
-            <i class="bi bi-lock-fill"></i>
-            Mot de passe
-          </label>
+  <label>
+    <i class="bi bi-lock-fill"></i>
+    Mot de passe
+  </label>
 
-          <input
-            type="password"
-            placeholder="********"
-            minlength="8"
-            maxlength="20"
-            required
-          >
+  <div class="password-group">
+    <input
+      type="password"
+      id="apPassword"
+      placeholder="********"
+      minlength="8"
+      maxlength="20"
+      required
+    >
 
-        </div>
+    <i
+      class="bi bi-eye"
+      onclick="togglePassword('apPassword', this)"
+    ></i>
+  </div>
+
+</div>
 
         <button class="btn" type="submit">
           <i class="bi bi-check-circle"></i>
@@ -221,20 +229,28 @@ function changeNetworkMode() {
 
         <div class="input-group">
 
-          <label>
-            <i class="bi bi-lock-fill"></i>
-            Mot de passe
-          </label>
+  <label>
+    <i class="bi bi-lock-fill"></i>
+    Mot de passe
+  </label>
 
-          <input
-            type="password"
-            placeholder="********"
-            minlength="8"
-            maxlength="20"
-            required
-          >
+  <div class="password-group">
+    <input
+      type="password"
+      id="wifiPassword"
+      placeholder="********"
+      minlength="8"
+      maxlength="20"
+      required
+    >
 
-        </div>
+    <i
+      class="bi bi-eye"
+      onclick="togglePassword('wifiPassword', this)"
+    ></i>
+  </div>
+
+</div>
 
         <button class="btn" type="submit">
           <i class="bi bi-check-circle"></i>
