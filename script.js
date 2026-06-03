@@ -280,6 +280,10 @@ document.getElementById("moduleForm").addEventListener("submit", function (e) {
 
   let mac2 = document.getElementById("mac2").value.trim();
 
+  let type = document.getElementById("typeModule").value;
+
+  let typeEntree = document.getElementById("typeEntree").value;
+
   if (!isValidMAC(mac1)) {
     Swal.fire({
       icon: "error",
@@ -297,10 +301,20 @@ document.getElementById("moduleForm").addEventListener("submit", function (e) {
     });
     return;
   }
+
+  if (typeEntree === "") {
+    Swal.fire({
+      icon: "warning",
+      title: "Choix requis",
+      text: "Veuillez sélectionner un type d'entrée",
+    });
+    return;
+  }
   const data = {
     type: type,
     macMaster: mac1,
     macSlave: mac2,
+    typeE: typeEntree,
   };
 
   fetch("http://localhost:3000/module", {
@@ -326,35 +340,36 @@ document.getElementById("moduleForm").addEventListener("submit", function (e) {
       });
     });
 
-  let type = document.getElementById("typeModule").value;
-
   let card = document.createElement("div");
 
   card.className = "module-card";
 
   card.innerHTML = `
+  <h4>
+    <i class="bi bi-hdd-network"></i>
+    Module ${type}
+  </h4>
 
-      <h4>
-        <i class="bi bi-hdd-network"></i>
-        Module ${type}
-      </h4>
+  <p>
+    <i class="bi bi-door-open"></i>
+    Entrée : ${typeEntree}
+  </p>
 
-      <p>
-        <i class="bi bi-activity"></i>
-        Passage : 50
-      </p>
+  <p>
+    <i class="bi bi-activity"></i>
+    Passage : 50
+  </p>
 
-      <p>
-        <i class="bi bi-wifi"></i>
-        Mode : En ligne
-      </p>
+  <p>
+    <i class="bi bi-wifi"></i>
+    Mode : En ligne
+  </p>
 
-      <p>
-        <i class="bi bi-battery-full"></i>
-        Batterie : 100%
-      </p>
-
-    `;
+  <p>
+    <i class="bi bi-battery-full"></i>
+    Batterie : 100%
+  </p>
+`;
 
   document.getElementById("moduleList").appendChild(card);
 
